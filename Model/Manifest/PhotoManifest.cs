@@ -26,6 +26,6 @@ namespace RoPE.Model.Manifest
 
     public class PhotoManifestResponse
     {
-        public PhotoManifest photo_manifest { get; set; }
+        public PhotoManifest Photo_manifest { get; set; }
     }
 }

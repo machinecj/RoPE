@@ -28,7 +28,7 @@ namespace RoPE.ViewModel.Helpers
                 string json = await response.Content.ReadAsStringAsync();
 
                 var photoManifestResponse = (JsonConvert.DeserializeObject<PhotoManifestResponse>(json));
-                photoManifest = photoManifestResponse.photo_manifest;
+                photoManifest = photoManifestResponse.Photo_manifest;
             }
 
             return photoManifest;

@@ -21,10 +21,17 @@
                 </MenuItem>
                 <MenuItem Header="_Select Rover" DataContext="{StaticResource vm}">
                     <MenuItem Header="Curiosity"
-                              Command="{Binding SelectRoverCommand}"/>
-                    <MenuItem Header="Opportunity"/>
-                    <MenuItem Header="Spirit"/>
-                    <MenuItem Header="Perseverance"/>
+                              Command="{Binding SelectRoverCommand}"
+                              CommandParameter="Curiosity"/>
+                    <MenuItem Header="Opportunity"
+                              Command="{Binding SelectRoverCommand}"
+                              CommandParameter="Opportunity"/>
+                    <MenuItem Header="Spirit"
+                              Command="{Binding SelectRoverCommand}"
+                              CommandParameter="Spirit"/>
+                    <MenuItem Header="Perseverance"
+                              Command="{Binding SelectRoverCommand}"
+                              CommandParameter="Perseverance"/>
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="About"/>
@@ -49,18 +56,23 @@
             </StackPanel>
             <Separator/>
             <Label Content="Search Photos" FontWeight="Bold"/>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" DataContext="{StaticResource vm}">
                 <Label Content="Martion Sol:" FontWeight="Bold"/>
-                <TextBox Text="{Binding SelectedSol, Mode=TwoWay}" MaxHeight="20" MaxWidth="40" MinWidth="30"/>
+                <TextBox Text="{Binding SelectedSol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         MaxHeight="20" 
+                         MaxWidth="40" 
+                         MinWidth="30"
+                         IsEnabled="{Binding IsPhotoManifestSet}"/>
+                <Label Content="Photos For Selected Sol:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="{Binding CountOfPhotosForSelectedSol}"/>
                 <Label Content="Earth Date:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <DatePicker/>
+                <Label Content="{Binding SelectedDate}"/>
                 <Label Content="Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <ComboBox MinWidth="50" MaxWidth="60">
-                    <ComboBoxItem Content="FHZ"/>
-                </ComboBox>
-                <Label Content="Total Photos For Selected Date and Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="534756"/>
-                <Button Content="Show Photos" Margin="10,0,0,0"/>
+                <ComboBox MinWidth="50" MaxWidth="100"
+                          ItemsSource="{Binding AvailableCameras}"
+                          SelectedItem="{Binding SelectedCamera}"
+                          IsEnabled="{Binding IsPhotoManifestSet}"/>
+                <Button Content="Search Photos" Margin="10,0,0,0"/>
             </StackPanel>
             <Separator/>
             <Image Source="C:\Users\codym\OneDrive\Pictures\c535384453c5470282056146f28439db.jpg" Margin="10,10,10,10" MaxHeight="600" MaxWidth="1240" HorizontalAlignment="Center"/>
