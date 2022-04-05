@@ -5,8 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoPE.View"
         mc:Ignorable="d"
-        Title="RoverWindow" Height="450" Width="800">
+        Title="RoverWindow" Height="800" Width="1280"
+        ResizeMode="NoResize">
     <Grid>
-        
+        <StackPanel Orientation="Vertical">
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Save Photo" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Select Rover">
+                    <MenuItem Header="Curiosity"/>
+                    <MenuItem Header="Opportunity"/>
+                    <MenuItem Header="Spirit"/>
+                    <MenuItem Header="Perseverance"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="About"/>
+                </MenuItem>
+            </Menu>
+            <Label Content="Rover Information" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Rover:" FontWeight="Bold"/>
+                <Label Content="Spirit"/>
+                <Label Content="Launch Date:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="12-04-2015"/>
+                <Label Content="Landing Date:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="10-22-2019"/>
+                <Label Content="Mission Status:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="Active"/>
+                <Label Content="Max Sol:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="1000"/>
+                <Label Content="Most Recent Date Available:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="04-04-2022"/>
+                <Label Content="Total Photos:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="543987"/>
+            </StackPanel>
+            <Separator/>
+            <Label Content="Search Photos" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Martion Sol:" FontWeight="Bold"/>
+                <TextBox Text="1000" MaxHeight="20" MaxWidth="40" MinWidth="30"/>
+                <Label Content="Earth Date:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <DatePicker/>
+                <Label Content="Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <ComboBox MinWidth="50" MaxWidth="60">
+                    <ComboBoxItem Content="FHZ"/>
+                </ComboBox>
+                <Label Content="Total Photos For Selected Date and Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
+                <Label Content="534756"/>
+                <Button Content="Show Photos" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Separator/>
+            <Image Source="C:\Users\codym\OneDrive\Pictures\c535384453c5470282056146f28439db.jpg" Margin="10,10,10,10" MaxHeight="600" MaxWidth="1240" HorizontalAlignment="Center"/>
+        </StackPanel>
+
     </Grid>
 </Window>
