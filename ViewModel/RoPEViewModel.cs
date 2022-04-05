@@ -1,4 +1,7 @@
 ﻿using RoPE.Model;
+using RoPE.Model.Manifest;
+using RoPE.ViewModel.Commands;
+using RoPE.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,8 +59,22 @@ namespace RoPE.ViewModel
             }
         }
 
+        public SelectRoverCommand SelectRoverCommand { get; set; }
+
         public RoPEViewModel()
         {
+            SelectedRover = "Spirit";
+            PhotoManifest = new PhotoManifest
+            {
+                Name = "Spirit"
+            };
+            SelectRoverCommand = new SelectRoverCommand(this);
+        }
+
+        public async void MakePhotoManifest()
+        {
+            var manifests = await NASARoverPhotoAPIHelper.GetPhotoManifest(SelectedRover);
+
 
         }
 

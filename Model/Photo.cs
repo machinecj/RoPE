@@ -30,4 +30,9 @@ namespace RoPE.Model
         public string Earth_date { get; set; }
         public Rover Rover { get; set; }
     }
+
+    public class PhotoResponse
+    {
+        public IList<Photo> Photos { get; set; }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RoPE.Model;
+using RoPE.Model.Manifest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,31 +17,26 @@ namespace RoPE.ViewModel.Helpers
         public const string PHOTOS_ENDPOINT = "mars-photos/api/v1/rovers/{0}/photos?api_key={1}&sol={2}"; // rover name, api key, and sol
         public const string API_KEY = "bfhQvZ4rTILlU6FdfFkak01RN3P93STycsF93Rx1";
 
-        public static async Task<List<PhotoManifest>> GetPhotoManifests()
+        public static async Task<PhotoManifest> GetPhotoManifest(string roverName)
         {
-            List<PhotoManifest> photoManifests = new List<PhotoManifest>();
-            string[] RoverNames = new string[] { "Curiosity", "Opportunity", "Spirit", "Perseverance" };
-            string url;
-            
-            foreach (string rName in RoverNames)
+            PhotoManifest photoManifest;
+            string url = BASE_URL + string.Format(MANIFEST_ENDPOINT, roverName, API_KEY);
+
+            using (HttpClient client = new HttpClient())
             {
-                url = BASE_URL + string.Format(MANIFEST_ENDPOINT, rName, API_KEY);
+                var response = await client.GetAsync(url);
+                string json = await response.Content.ReadAsStringAsync();
 
-                using (HttpClient client = new HttpClient())
-                {
-                    var response = await client.GetAsync(url);
-                    string json = await response.Content.ReadAsStringAsync();
-
-                    photoManifests.Add( (JsonConvert.DeserializeObject<List<PhotoManifest>>(json)).FirstOrDefault() );
-                }
+                var photoManifestResponse = (JsonConvert.DeserializeObject<PhotoManifestResponse>(json));
+                photoManifest = photoManifestResponse.photo_manifest;
             }
 
-            return photoManifests;
+            return photoManifest;
         }
 
-        public static async Task<List<Photo>> GetPhotos(string roverName, int selectedSol)
+        public static async Task<List<Model.Photo>> GetPhotos(string roverName, int selectedSol)
         {
-            List<Photo> photos = new List<Photo>();
+            List<Model.Photo> photos = new List<Model.Photo>();
 
             string url = BASE_URL + string.Format(PHOTOS_ENDPOINT, roverName, API_KEY, selectedSol);
 
@@ -48,7 +44,7 @@ namespace RoPE.ViewModel.Helpers
             {
                 var response = await client.GetAsync(url);
                 string json = await response.Content.ReadAsStringAsync();
-                photos = JsonConvert.DeserializeObject<List<Photo>>(json);
+                photos = JsonConvert.DeserializeObject<List<Model.Photo>>(json);
             }
 
             return photos;

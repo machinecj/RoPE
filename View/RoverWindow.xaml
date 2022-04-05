@@ -19,8 +19,9 @@
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
-                <MenuItem Header="_Select Rover">
-                    <MenuItem Header="Curiosity"/>
+                <MenuItem Header="_Select Rover" DataContext="{StaticResource vm}">
+                    <MenuItem Header="Curiosity"
+                              Command="{Binding SelectRoverCommand}"/>
                     <MenuItem Header="Opportunity"/>
                     <MenuItem Header="Spirit"/>
                     <MenuItem Header="Perseverance"/>
