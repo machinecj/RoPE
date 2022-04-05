@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoPE.View"
+        xmlns:vm="clr-namespace:RoPE.ViewModel"
         mc:Ignorable="d"
         Title="RoverWindow" Height="800" Width="1280"
         ResizeMode="NoResize">
-    <Grid>
-        <StackPanel Orientation="Vertical">
+    <Window.Resources>
+        <vm:RoPEViewModel x:Key="vm"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource vm}">
+        <StackPanel Orientation="Vertical" DataContext="{Binding PhotoManifest}">
             <Menu>
                 <MenuItem Header="_File">
                     <MenuItem Header="_Save Photo" />
@@ -28,25 +32,25 @@
             <Label Content="Rover Information" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Rover:" FontWeight="Bold"/>
-                <Label Content="Spirit"/>
+                <Label Content="{Binding Name}"/>
                 <Label Content="Launch Date:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="12-04-2015"/>
+                <Label Content="{Binding Launch_date}"/>
                 <Label Content="Landing Date:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="10-22-2019"/>
+                <Label Content="{Binding Landing_date}"/>
                 <Label Content="Mission Status:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="Active"/>
+                <Label Content="{Binding Status}"/>
                 <Label Content="Max Sol:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="1000"/>
+                <Label Content="{Binding Max_sol}"/>
                 <Label Content="Most Recent Date Available:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="04-04-2022"/>
+                <Label Content="{Binding Max_date}"/>
                 <Label Content="Total Photos:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <Label Content="543987"/>
+                <Label Content="{Binding Total_photos}"/>
             </StackPanel>
             <Separator/>
             <Label Content="Search Photos" FontWeight="Bold"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Martion Sol:" FontWeight="Bold"/>
-                <TextBox Text="1000" MaxHeight="20" MaxWidth="40" MinWidth="30"/>
+                <TextBox Text="{Binding SelectedSol, Mode=TwoWay}" MaxHeight="20" MaxWidth="40" MinWidth="30"/>
                 <Label Content="Earth Date:" FontWeight="Bold" Margin="10,0,0,0"/>
                 <DatePicker/>
                 <Label Content="Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
