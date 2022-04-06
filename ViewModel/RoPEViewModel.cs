@@ -12,18 +12,6 @@ namespace RoPE.ViewModel
 {
     public class RoPEViewModel : INotifyPropertyChanged
     {
-        private string selectedRover;
-
-        public string SelectedRover
-        {
-            get { return selectedRover; }
-            set 
-            { 
-                selectedRover = value;
-                OnPropertyChanged("SelectedRover");
-            }
-        }
-
         private int selectedSol;
 
         public int SelectedSol
@@ -31,8 +19,6 @@ namespace RoPE.ViewModel
             get { return selectedSol; }
             set 
             {
-                // TODO eventually need to validate that the selected sol is between 0 and max_sol
-                // TODO the textbox for selected sol needs to be disabled if no Photomanifest is selected
                 selectedSol = value;
                 OnPropertyChanged("SelectedSol");
                 MakeAvailableCameras();
@@ -124,12 +110,12 @@ namespace RoPE.ViewModel
             SelectedSol = 0;
         }
 
-        public void MakeAvailableCameras()
+        public void MakeAvailableCameras() // TODO refactor to move SelectedDate and CountOfPhotosForSelectedSol to seperate methods, or rename method
         {
             AvailableCameras.Clear();
 
             Model.Manifest.Photo photo = new Model.Manifest.Photo();
-            foreach (Model.Manifest.Photo curPhoto in PhotoManifest.Photos) // TODO the combobox for selected camera needs to be disabled if no Photomanifest is selected
+            foreach (Model.Manifest.Photo curPhoto in PhotoManifest.Photos)
             {
                 if (curPhoto.Sol == SelectedSol)
                 {
@@ -149,7 +135,7 @@ namespace RoPE.ViewModel
             }
             else
             {
-                foreach (string cameraName in photo.Cameras) // TODO a null reference exception can happen if the sol is out of range OR if that sol has no photos
+                foreach (string cameraName in photo.Cameras)
                     AvailableCameras.Add(cameraName);
 
                 SelectedDate = photo.Earth_date;

@@ -68,7 +68,7 @@
                 <Label Content="Earth Date:" FontWeight="Bold" Margin="10,0,0,0"/>
                 <Label Content="{Binding SelectedDate}"/>
                 <Label Content="Camera:" FontWeight="Bold" Margin="10,0,0,0"/>
-                <ComboBox MinWidth="50" MaxWidth="100"
+                <ComboBox MinWidth="50" MaxWidth="125"
                           ItemsSource="{Binding AvailableCameras}"
                           SelectedItem="{Binding SelectedCamera}"
                           IsEnabled="{Binding IsPhotoManifestSet}"/>
