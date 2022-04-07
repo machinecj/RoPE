@@ -134,8 +134,14 @@ namespace RoPE.ViewModel
         {
             get { return currentPhotoIndex; }
             set 
-            { 
-                currentPhotoIndex = value;
+            {
+                if (value > MaxPhotoIndex)
+                    currentPhotoIndex = MaxPhotoIndex;
+                else if (value < 0)
+                    currentPhotoIndex = 0;
+                else
+                    currentPhotoIndex = value;
+
                 if (photosList != null && photosList.Count > 0)
                 {
                     DisplayedPhoto = photosList[currentPhotoIndex];

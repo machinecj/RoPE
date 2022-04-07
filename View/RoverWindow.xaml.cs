@@ -23,5 +23,11 @@ namespace RoPE.View
         {
             InitializeComponent();
         }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ImageControl.MaxHeight = this.ActualHeight - 220;
+            ImageControl.MaxWidth = this.ActualWidth;
+        }
     }
 }
