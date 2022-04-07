@@ -7,9 +7,10 @@
         xmlns:vm="clr-namespace:RoPE.ViewModel"
         mc:Ignorable="d"
         Title="RoverWindow" Height="800" Width="1280"
-        ResizeMode="NoResize">
+        >
     <Window.Resources>
         <vm:RoPEViewModel x:Key="vm"/>
+        <BooleanToVisibilityConverter x:Key="BoolVisibilityConvert"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource vm}">
         <StackPanel Orientation="Vertical" DataContext="{Binding PhotoManifest}">
@@ -77,11 +78,28 @@
                         CommandParameter="{Binding SelectedCamera}"/>
             </StackPanel>
             <Separator/>
-            <Image DataContext="{StaticResource vm}"
-                   Source="{Binding DisplayedPhoto}" 
-                   Margin="10,10,10,10" MaxHeight="600" MaxWidth="1240" 
-                   HorizontalAlignment="Center"/>
-        </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        DataContext="{StaticResource vm}">
+                <Image Source="{Binding DisplayedPhoto}" 
+                       Margin="10,10,10,10" MaxHeight="580" MaxWidth="1240"
+                       HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding IsDisplayedPhotoSet, Converter={StaticResource BoolVisibilityConvert}}">
+                    <Button Content="&lt;"
+                            Command="{Binding PhotoNavigateCommand}"
+                            CommandParameter="Left"/>
+                    <TextBlock Margin="5,0,5,0">
+                        <Run Text="{Binding CurrentPhotoIndex}"/>
+                        <Run Text="of"/>
+                        <Run Text="{Binding MaxPhotoIndex}"/>
+                    </TextBlock>
+                    <Button Content="&gt;"
+                            Command="{Binding PhotoNavigateCommand}"
+                            CommandParameter="Right"/>
+                </StackPanel>
+            </StackPanel>
 
+        </StackPanel>
     </Grid>
 </Window>

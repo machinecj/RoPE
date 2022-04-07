@@ -75,6 +75,19 @@ namespace RoPE.ViewModel
             }
         }
 
+        private bool isDisplayedPhotoSet;
+
+        public bool IsDisplayedPhotoSet
+        {
+            get { return isDisplayedPhotoSet; }
+            set 
+            { 
+                isDisplayedPhotoSet = value;
+                OnPropertyChanged("IsDisplayedPhotoSet");
+            }
+        }
+
+
         /* TODO change to pulling all manifests at startup, and then just selecting between them? 
          * Currently there are unneeded calls being made to get the manifest again each time rover changes and a noticable delay after selecting a rover.
          * */
@@ -102,6 +115,11 @@ namespace RoPE.ViewModel
             get { return displayedPhoto; }
             set 
             {
+                if (string.IsNullOrEmpty(value))
+                    IsDisplayedPhotoSet = false;
+                else
+                    IsDisplayedPhotoSet = true;
+
                 if (value.Contains(".jpl"))
                     displayedPhoto = value.Remove(12,4);
                 else
@@ -147,10 +165,13 @@ namespace RoPE.ViewModel
 
         public SearchPhotosCommand SearchPhotosCommand { get; set; }
 
+        public PhotoNavigateCommand PhotoNavigateCommand { get; set; }
+
         public RoPEViewModel()
         {
             SelectRoverCommand = new SelectRoverCommand(this);
             SearchPhotosCommand = new SearchPhotosCommand(this);
+            PhotoNavigateCommand = new PhotoNavigateCommand(this);
             AvailableCameras = new ObservableCollection<string>();
             photosList = new List<string>();
         }
@@ -217,6 +238,18 @@ namespace RoPE.ViewModel
                 SelectedDate = photo.Earth_date;
                 CountOfPhotosForSelectedSol = photo.Total_photos;
             }
+        }
+
+        public void IncrementCurrentPhotoIndex()
+        {
+            if (CurrentPhotoIndex < MaxPhotoIndex)
+                CurrentPhotoIndex++;
+        }
+
+        public void DecrementCurrentPhotoIndex()
+        {
+            if (CurrentPhotoIndex > 0)
+                CurrentPhotoIndex--;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
