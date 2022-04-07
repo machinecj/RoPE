@@ -37,6 +37,7 @@ namespace RoPE.ViewModel.Helpers
         public static async Task<List<Model.Photo>> GetPhotos(string roverName, int selectedSol)
         {
             List<Model.Photo> photos = new List<Model.Photo>();
+            PhotoResponse photoResponse;
 
             string url = BASE_URL + string.Format(PHOTOS_ENDPOINT, roverName, API_KEY, selectedSol);
 
@@ -44,7 +45,8 @@ namespace RoPE.ViewModel.Helpers
             {
                 var response = await client.GetAsync(url);
                 string json = await response.Content.ReadAsStringAsync();
-                photos = JsonConvert.DeserializeObject<List<Model.Photo>>(json);
+                photoResponse = JsonConvert.DeserializeObject<PhotoResponse>(json);
+                photos = photoResponse.Photos.ToList<Model.Photo>();
             }
 
             return photos;

@@ -72,10 +72,15 @@
                           ItemsSource="{Binding AvailableCameras}"
                           SelectedItem="{Binding SelectedCamera}"
                           IsEnabled="{Binding IsPhotoManifestSet}"/>
-                <Button Content="Search Photos" Margin="10,0,0,0"/>
+                <Button Content="Search Photos" Margin="10,0,0,0"
+                        Command="{Binding SearchPhotosCommand}"
+                        CommandParameter="{Binding SelectedCamera}"/>
             </StackPanel>
             <Separator/>
-            <Image Source="C:\Users\codym\OneDrive\Pictures\c535384453c5470282056146f28439db.jpg" Margin="10,10,10,10" MaxHeight="600" MaxWidth="1240" HorizontalAlignment="Center"/>
+            <Image DataContext="{StaticResource vm}"
+                   Source="{Binding DisplayedPhoto}" 
+                   Margin="10,10,10,10" MaxHeight="600" MaxWidth="1240" 
+                   HorizontalAlignment="Center"/>
         </StackPanel>
 
     </Grid>
