@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:RoPE.View"
         xmlns:vm="clr-namespace:RoPE.ViewModel"
         mc:Ignorable="d"
-        Title="RoverWindow" Height="800" Width="1280"
-        MinHeight="800" MinWidth="1120"
+        Title="RoPE - Mars Rover Photo Explorer" Height="800" Width="1280"
+        MinHeight="800" MinWidth="1150"
         SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <vm:RoPEViewModel x:Key="vm"/>
@@ -17,9 +17,11 @@
         <StackPanel Orientation="Vertical" DataContext="{Binding PhotoManifest}">
             <Menu>
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Save Photo" />
+                    <MenuItem Header="_Save Photo"
+                              IsEnabled="False"/>
                     <Separator />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem Header="_Exit" 
+                              Click="ExitMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Header="_Select Rover" DataContext="{StaticResource vm}">
                     <MenuItem Header="Curiosity"
@@ -36,7 +38,8 @@
                               CommandParameter="Perseverance"/>
                 </MenuItem>
                 <MenuItem Header="_Help">
-                    <MenuItem Header="About"/>
+                    <MenuItem Header="About"
+                              IsEnabled="False"/>
                 </MenuItem>
             </Menu>
             <Label Content="Rover Information" FontWeight="Bold"/>

@@ -29,5 +29,10 @@ namespace RoPE.View
             ImageControl.MaxHeight = this.ActualHeight - 220;
             ImageControl.MaxWidth = this.ActualWidth;
         }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

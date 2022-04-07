@@ -33,7 +33,6 @@ namespace RoPE.ViewModel
             set 
             { 
                 selectedCamera = value;
-                //if (selectedCamera != null)
                 OnPropertyChanged("SelectedCamera");
             }
         }
@@ -62,7 +61,6 @@ namespace RoPE.ViewModel
             }
         }
 
-        // TODO Instead of using a bool binded to isEnabled, should this be handled through a command/can execute like the search button is?
         private bool isPhotoManifestSet;
 
         public bool IsPhotoManifestSet
@@ -86,7 +84,6 @@ namespace RoPE.ViewModel
                 OnPropertyChanged("IsDisplayedPhotoSet");
             }
         }
-
 
         /* TODO change to pulling all manifests at startup, and then just selecting between them? 
          * Currently there are unneeded calls being made to get the manifest again each time rover changes and a noticable delay after selecting a rover.
@@ -162,9 +159,6 @@ namespace RoPE.ViewModel
             }
         }
 
-
-
-
         public ObservableCollection<string> AvailableCameras { get; set; }
 
         public SelectRoverCommand SelectRoverCommand { get; set; }
@@ -213,7 +207,7 @@ namespace RoPE.ViewModel
             MaxPhotoIndex = photosList.Count - 1;
         }
 
-        public void MakeAvailableCameras() // TODO refactor to move SelectedDate and CountOfPhotosForSelectedSol to seperate methods, or rename method
+        public void MakeAvailableCameras()
         {
             AvailableCameras.Clear();
 
@@ -264,7 +258,5 @@ namespace RoPE.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
 }
