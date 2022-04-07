@@ -48,7 +48,6 @@ namespace RoPE.ViewModel.Helpers
                 photoResponse = JsonConvert.DeserializeObject<PhotoResponse>(json);
                 photos = photoResponse.Photos.ToList<Model.Photo>();
             }
-
             return photos;
         }
     }

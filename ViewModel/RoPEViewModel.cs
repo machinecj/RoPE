@@ -101,8 +101,11 @@ namespace RoPE.ViewModel
         {
             get { return displayedPhoto; }
             set 
-            { 
-                displayedPhoto = value;
+            {
+                if (value.Contains(".jpl"))
+                    displayedPhoto = value.Remove(12,4);
+                else
+                    displayedPhoto = value;
                 OnPropertyChanged("DisplayedPhoto");
             }
         }
