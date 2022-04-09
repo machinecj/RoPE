@@ -23,7 +23,7 @@ namespace RoPE.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            VM.MakePhotoManifest(parameter as string);
+            VM.SelectPhotoManifest(parameter as string);
         }
     }
 }

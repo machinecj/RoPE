@@ -85,9 +85,6 @@ namespace RoPE.ViewModel
             }
         }
 
-        /* TODO change to pulling all manifests at startup, and then just selecting between them? 
-         * Currently there are unneeded calls being made to get the manifest again each time rover changes and a noticable delay after selecting a rover.
-         * */
         private PhotoManifest photoManifest; 
 
         public PhotoManifest PhotoManifest
@@ -99,6 +96,10 @@ namespace RoPE.ViewModel
                 OnPropertyChanged("PhotoManifest");
             }
         }
+
+        private readonly string[] roverNames = { "Spirit", "Curiosity", "Opportunity", "Perseverance" };
+
+        public List<PhotoManifest> PhotoManifests { get; set; }
 
         private List<string> photosList; 
         /* TODO photosList stores just a list of photo URLs for the sol/camera, so gets a new set of photos from the API each time a new camera is selected. 
@@ -159,6 +160,19 @@ namespace RoPE.ViewModel
             }
         }
 
+        private bool isPhotoManifestsLoaded;
+
+        public bool IsPhotoManifestsLoaded
+        {
+            get { return isPhotoManifestsLoaded; }
+            set 
+            { 
+                isPhotoManifestsLoaded = value;
+                OnPropertyChanged("IsPhotoManifestsLoaded");
+            }
+        }
+
+
         public ObservableCollection<string> AvailableCameras { get; set; }
 
         public SelectRoverCommand SelectRoverCommand { get; set; }
@@ -174,12 +188,21 @@ namespace RoPE.ViewModel
             PhotoNavigateCommand = new PhotoNavigateCommand(this);
             AvailableCameras = new ObservableCollection<string>();
             photosList = new List<string>();
+            PhotoManifests = new List<PhotoManifest>();
+            BuildPhotoManifests();
         }
 
-        public async void MakePhotoManifest(string roverName)
+        public void SelectPhotoManifest(string roverName)
         {
-            var manifest = await NASARoverPhotoAPIHelper.GetPhotoManifest(roverName);
-            PhotoManifest = manifest;
+            if (PhotoManifests.Count == 0)
+                BuildPhotoManifests();
+
+            foreach (PhotoManifest manifest in PhotoManifests)
+            {
+                if (manifest.Name.Equals(roverName))
+                    PhotoManifest = manifest;
+            }
+
             IsPhotoManifestSet = true;
             AvailableCameras.Clear();
             photosList.Clear();
@@ -190,6 +213,16 @@ namespace RoPE.ViewModel
             CountOfPhotosForSelectedSol = 0;
             SelectedSol = 0;
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public async void BuildPhotoManifests()
+        {
+            PhotoManifests.Clear();
+            foreach (string roverName in roverNames)
+            {
+                PhotoManifests.Add(await NASARoverPhotoAPIHelper.GetPhotoManifest(roverName));
+            }
+            IsPhotoManifestsLoaded = true;
         }
 
         public async void SearchPhotos(string cameraName)
@@ -209,6 +242,9 @@ namespace RoPE.ViewModel
 
         public void MakeAvailableCameras()
         {
+            if (PhotoManifest == null)
+                return;
+
             AvailableCameras.Clear();
 
             Model.Manifest.Photo photo = new Model.Manifest.Photo();

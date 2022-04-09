@@ -23,7 +23,8 @@
                     <MenuItem Header="_Exit" 
                               Click="ExitMenuItem_Click"/>
                 </MenuItem>
-                <MenuItem Header="_Select Rover" DataContext="{StaticResource vm}">
+                <MenuItem Header="_Select Rover" DataContext="{StaticResource vm}"
+                          IsEnabled="{Binding IsPhotoManifestsLoaded}">
                     <MenuItem Header="Curiosity"
                               Command="{Binding SelectRoverCommand}"
                               CommandParameter="Curiosity"/>
